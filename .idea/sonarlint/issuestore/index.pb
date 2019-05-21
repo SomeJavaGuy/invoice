@@ -17,3 +17,7 @@ X
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
 ]
 -src/main/java/com/invoice/InvoiceCreator.java,c\5\c5625e3443c6d6339087ce60b7e54b90af56c579
+]
+-src/main/java/com/invoice/data/DBManager.java,3\2\32cb2e9fd4f7591f88284247734acf4c0ad39a4f
+[
++src/main/java/com/invoice/data/Product.java,0\0\00e334ef6dc02f93ed98eec854b2372debf70369

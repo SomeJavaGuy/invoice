@@ -1,5 +1,6 @@
 package com.invoice;
 
+import com.invoice.data.Product;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -7,7 +8,7 @@ import java.io.ByteArrayOutputStream;
 
 public class InvoiceCreator {
 
-    public ByteArrayOutputStream create(String name, String value) {
+    public ByteArrayOutputStream create(Product product) {
         Document document = new Document();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
@@ -18,15 +19,21 @@ public class InvoiceCreator {
         }
 
         document.open();
+
         Font font = FontFactory.getFont(FontFactory.COURIER, 12, BaseColor.BLACK);
-        Chunk nameChunk = new Chunk("Name: " + name , font);
-        Chunk valueChunk = new Chunk("Value: " + value, font);
+        Chunk nameChunk = new Chunk("Name: " + product.getName(), font);
+        Chunk nettoPriceChunk = new Chunk("Netto price: " + product.getNettoPrice(), font);
+        Chunk vatChunk = new Chunk("  Vat: " + product.getVAT() + "%", font);
+        Chunk bruttoPriceChunk = new Chunk("  Brutto price: " + product.getBruttoPrice(), font);
 
         Paragraph firstParagraph = new Paragraph();
         Paragraph secondParagraph = new Paragraph();
 
+
         firstParagraph.add(nameChunk);
-        secondParagraph.add(valueChunk);
+        secondParagraph.add(nettoPriceChunk);
+        secondParagraph.add(vatChunk);
+        secondParagraph.add(bruttoPriceChunk);
 
 
         try {

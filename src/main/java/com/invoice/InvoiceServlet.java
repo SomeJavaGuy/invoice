@@ -1,27 +1,31 @@
 package com.invoice;
 
-import javax.servlet.ServletException;
+import com.invoice.data.Product;
+
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 @WebServlet(name = "InvoiceServlet", urlPatterns = {"invoice"}, loadOnStartup = 1)
 public class InvoiceServlet extends HttpServlet {
 
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response){
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         String name = request.getParameter("name");
-        String value = request.getParameter("value");
+        String nettoPrice = request.getParameter("netto-price");
+        String vat = request.getParameter("vat");
 
-        ByteArrayOutputStream byteArrayOutputStream = new InvoiceCreator().create(name, value);
+        Product product = new Product(name, nettoPrice, vat);
+
+        ByteArrayOutputStream byteArrayOutputStream = new InvoiceCreator().create(product);
         response.setContentType("application/pdf");
-        response.addHeader("Content-Disposition", "attachment; filename=" + "Invoice.pdf");
+        response.addHeader("Content-Disposition", "attachment; filename=" + "Invoice-" + name + ".pdf");
         response.setContentLength(byteArrayOutputStream.size());
-
 
         try {
             ServletOutputStream servletOutputStream = response.getOutputStream();
@@ -30,6 +34,8 @@ public class InvoiceServlet extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
 
         //if (name == null) name = "World";
         //request.setAttribute("user", name);
