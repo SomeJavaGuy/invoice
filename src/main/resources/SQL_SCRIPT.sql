@@ -18,9 +18,5 @@ ALTER TABLE `products`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
-SET GLOBAL time_zone = '+00:00';
-COMMIT;
-
 INSERT INTO products ( name , netto , vat) VALUES ( 'Chair' , '1000' , '23') ;
 INSERT INTO products ( name , netto , vat) VALUES ( 'Desk' , '500' , '23') ;
-COMMIT;
